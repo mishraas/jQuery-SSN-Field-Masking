@@ -10,10 +10,15 @@ Social Security Number termed as SSN is quite sensitive information which is gen
 You may achieve following key things from this utility:
 
 1) Can define custom formatting for numbers be it XX-XXX-XXXX or XXX-XX-XXXX.
+
 2) Can control the masked character that would be presented when user types in. It could be like 'X' or 'O'.
+
 3) Behind the scenes this control retains the plain/raw SSN value which would be submitted to server, if required.
+
 4) It is capable of formatting & masking the number if the input already holds a value. For ex: 123657891 may be converted to XXX-XX-7891 depending on the configuration.
+
 5) It also handles the values if they are already masked. For ex: XXXXX1023 would be formatted as XXX-XX-1023 again as per the configuration of the utility.
+
 6) To detect if the number is already masked before the utility took over the input field, we can define a numeric masked character equivalent. This is useful in cases where server already sends a masked value and this utility re-mask/formats that value, in such cases the masked character can be replaced by another numeric equivalent like '9'. It is helpful to identify if the available value was originally masked or not. For ex: XXXXX1023 is formatted as XXX-XX-1023 and it's submit value would be 999991023.
 
 
