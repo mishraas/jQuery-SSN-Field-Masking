@@ -1,0 +1,19 @@
+<!doctype html>
+	<head>Example: SSN Masking</head>
+	<body>
+		<label for="ssn">SSN</label>
+		<input type="text" id="ssn"  name="ssn" class="ssnControl"></input>
+
+		<script type="text/javascript" src="js/jquery.js"></script>
+		<script type="text/javascript" src="js/jquery.maskedinput.min.js"></script>
+		<script type="text/javascript" src="js/jquery.maskssn.js"></script>
+
+		<script type="text/javascript">
+
+			$(document).ready(function(){
+				$('#ssn').unmask().maskSSN('999-99-9999', {maskedChar:'X', maskedCharsLength:5});
+			});
+
+		</script>
+	</body>
+</html>
