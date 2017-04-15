@@ -65,17 +65,24 @@ $.fn.extend({
 							c = t;
 						}
 					}
-					function androidInputEvent() {
+					function androidInputEvent(e) {
 						var curVal = input.val(), pos = input.caret();
-						if (curVal.length < oldVal.length) {
-							for (checkVal(!0); pos.begin > 0 && !tests[pos.begin - 1]; ) pos.begin--;
-							if (0 === pos.begin) for (;pos.begin < firstNonMaskPos && !tests[pos.begin]; ) pos.begin++;
-							input.caret(pos.begin, pos.begin);
+						if (oldVal && oldVal.length && curVal.length < oldVal.length) {
+							input.val("");
+							clearBuffer(0, buffer.length);
 						} else {
-							for (checkVal(!0); pos.begin < len && !tests[pos.begin]; ) pos.begin++;
-							input.caret(pos.begin, pos.begin);
+							var code = oldVal?getChangedChar(oldVal, curVal):curVal;
+							checkVal(!0, input.data($.mask.dataName)()+code);
+							input.caret(seekNext(pos.begin-1));
+							e.preventDefault();
 						}
 						tryFireCompleted();
+					}
+					function getChangedChar(oldV, newV){
+						 var c = newV.split("").find(function(v, i){
+							return v !== oldV[i];
+						});
+						return c!==$.mask.placeholder?c:"";
 					}
 					function blurEvent() {
 						checkVal(), input.val() != focusText && input.change();
