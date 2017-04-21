@@ -66,23 +66,26 @@ $.fn.extend({
 						}
 					}
 					function androidInputEvent(e) {
-						var curVal = input.val(), pos = input.caret();
+						var curVal = input.val();
 						if (oldVal && oldVal.length && curVal.length < oldVal.length) {
 							input.val("");
 							clearBuffer(0, buffer.length);
 						} else {
-							var code = oldVal?getChangedChar(oldVal, curVal):curVal;
-							checkVal(!0, input.data($.mask.dataName)()+code);
-							input.caret(seekNext(pos.begin-1));
-							e.preventDefault();
+							var code = oldVal ? getChangedChar(oldVal, curVal) : curVal;
+							var pos = checkVal(!0, input.data($.mask.dataName)() + code);
+							window.setTimeout(function() {
+								input.caret(pos, pos);
+							}, 10);
+							e.stopImmediatePropagation();
 						}
 						tryFireCompleted();
-					}
+						return false;
+          			}
 					function getChangedChar(oldV, newV){
 						 var c = newV.split("").find(function(v, i){
 							return v !== oldV[i];
 						});
-						return c!==$.mask.placeholder?c:"";
+						return (c && c !== $.mask.placeholder && c !== settings.maskedChar) ? c : "";
 					}
 					function blurEvent() {
 						checkVal(), input.val() != focusText && input.change();
